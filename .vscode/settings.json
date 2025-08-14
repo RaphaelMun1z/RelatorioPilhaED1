@@ -1,0 +1,8 @@
+{
+    "files.associations": {
+        "*.embeddedhtml": "html",
+        "*.scss": "tailwindcss",
+        "interface.h": "c",
+        "stdlib.h": "c"
+    }
+}
