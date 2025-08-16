@@ -3,6 +3,8 @@
         "*.embeddedhtml": "html",
         "*.scss": "tailwindcss",
         "interface.h": "c",
-        "stdlib.h": "c"
+        "stdlib.h": "c",
+        "stdio.h": "c",
+        "interfaces.h": "c"
     }
 }

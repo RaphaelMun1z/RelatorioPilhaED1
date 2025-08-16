@@ -2,28 +2,28 @@
 #include <stdlib.h>
 #include "interface.h"
 
-void inicializaPilha(Pilha *p){
+void inicializar_pilha_registro_atendimento(Pilha *p){
     for (int ii = 0; ii < TAM_PILHA; ii++){
         p->dados[ii] = 0;
     }
     p->topo = 0;
 }
 
-int pilhaCheia(Pilha *p){
+int pilha_cheia_registro_atendimento(Pilha *p){
     if(p->topo == TAM_PILHA){
         return 1;
     }
     return 0;
 }
 
-int pilhaVazia(Pilha *p){
+int pilha_vazia_registro_atendimento(Pilha *p){
     if(p->topo == 0){
         return 1;
     }
     return 0;
 }
 
-void empilha(Pilha *p, int valor){
+void adicionar_registro_atendimento(Pilha *p, int valor){
     if(pilhaCheia(p) == 1){
         printf("Pilha cheia! Não é possível empilhar.\n");
         return;
@@ -34,7 +34,7 @@ void empilha(Pilha *p, int valor){
     printf("Empilhado com sucesso.\n");
 }
 
-int desempilha(Pilha *p){
+int remover_registro_atendimento(Pilha *p){
     if(pilhaVazia(p) == 1){
         printf("Pilha vazia! Não é possível desempilhar.\n");
         return -1;
@@ -45,7 +45,7 @@ int desempilha(Pilha *p){
     return p->dados[p->topo];
 }
 
-void imprimePilha(Pilha *p){
+void imprimir_pilha_registro_atendimento(Pilha *p){
     if(pilhaVazia(p) == 1){
         printf("Pilha vazia! Não há elementos para imprimir.\n");
         return;

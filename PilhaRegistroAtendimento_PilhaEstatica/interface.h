@@ -11,9 +11,9 @@ typedef struct Pilha {
     int topo;
 } Pilha;
 
-void inicializaPilha(Pilha *p);
-int pilhaCheia(Pilha *p);
-int pilhaVazia(Pilha *p);
-void empilha(Pilha *p, int valor);
-int desempilha(Pilha *p);
-void imprimePilha(Pilha *p);
+void inicializar_pilha_registro_atendimento(Pilha *p);
+int pilha_cheia_registro_atendimento(Pilha *p);
+int pilha_vazia_registro_atendimento(Pilha *p);
+void adicionar_registro_atendimento(Pilha *p, int valor);
+int remover_registro_atendimento(Pilha *p);
+void imprimir_pilha_registro_atendimento(Pilha *p);

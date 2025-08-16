@@ -1,23 +1,9 @@
-typedef struct Paciente {
-    char nome[100];
-    char CPF[11];
-    char endereço[100];
-    int tipoCaso; 
-    // 0 = emergência
-    // 1 = consulta
-    struct Paciente* proxPaciente;
-} Paciente;
+#include "../interfaces/interfaces.h"
 
-typedef struct Queue {
-    Paciente* inicio;
-    Paciente* fim;
-} Queue;
-
-Queue* initialize_queue();
-int queue_exists(Queue *queue);
-int queue_is_empty(Queue *queue);
-int adiciona_fila_atendimento_medico(Queue *queue, int item);
-int remove_item(Queue *queue);
-void select_item(Queue *queue, int position);
-int get_queue_size(Queue *queue);
-void print_queue(Queue *queue);
+FilaAtendimento* inicializar_fila_atendimento_medico();
+int fila_existe_atendimento_medico(FilaAtendimento *fila);
+int fila_vazia_atendimento_medico(FilaAtendimento *fila);
+void adicionar_fila_atendimento_medico(FilaAtendimento *fila, PacienteCadastro *pacienteCadastrado, int tipoAtendimento);
+void remover_paciente_fila_atendimento_medico(FilaAtendimento *fila);
+int obter_tamanho_fila_atendimento_medico(FilaAtendimento *fila);
+void imprimir_fila_atendimento_medico(FilaAtendimento *fila);
