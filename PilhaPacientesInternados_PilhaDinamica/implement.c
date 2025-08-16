@@ -118,6 +118,21 @@ void remover_pacientes_internados(PilhaPacientesInternados *p){
     printf("Paciente removido da internação com sucesso.\n");
 }
 
+int obter_tamanho_pilha_pacientes_internados(PilhaPacientesInternados *p){
+    if(pilha_vazia_pacientes_internados(p) == 1){
+        printf("PilhaPacientesInternados vazia! Não há elementos para imprimir.\n");
+        return -1;
+    }
+
+    int tamanho = 0;
+    PacienteInternado *atual = p->topo;
+    while (atual != NULL) {
+        tamanho++;
+        atual = atual->proxPaciente;
+    }
+    return tamanho;
+}
+
 void imprimer_pilha_pacientes_internados(PilhaPacientesInternados *p){
     if(pilha_vazia_pacientes_internados(p) == 1){
         printf("PilhaPacientesInternados vazia! Não há elementos para imprimir.\n");

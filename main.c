@@ -7,6 +7,7 @@
 #include "FilaAtendimento_FilaDinamica/interface.h"
 #include "PilhaLogAtendimento_PilhaEstatica/interface.h"
 #include "PilhaPacientesInternados_PilhaDinamica/interface.h"
+#include "Relatorios/relatorios.c"
 
 void mostraMenu();
 void escolheOpcao(int opcao);
@@ -221,6 +222,30 @@ void nova_internacao(){
 
 void gerar_relatorio(){
     printf("~~~~~~ Relatório ~~~~~~\n");
+    
+    int opcaoRelatorio;
+    printf("Escolha o relatório a ser gerado: \n");
+    printf("[1] Relatório de pacientes cadastrados\n");
+    printf("[2] Relatório de pacientes internados\n");
+    scanf("%d", &opcaoRelatorio);
+    getchar();
+    printf("\n");
+    
+    switch (opcaoRelatorio)
+    {
+        case 1:{
+            GerarRelatorioTotalPacientesCadastrados(&preCadastroPacientes);
+            break;
+        }
+        case 2:{
+            GerarRelatorioTotalPacientesInternados(pilhaPacientesInternados, obter_tamanho_pilha_pacientes_internados(pilhaPacientesInternados));
+            break;
+        }
+        default:{
+            printf("Valor inválido!\n");
+            break;
+        }
+    }
     
     limpa_tela();
 }

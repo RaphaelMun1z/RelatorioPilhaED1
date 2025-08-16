@@ -5,6 +5,10 @@
         "interface.h": "c",
         "stdlib.h": "c",
         "stdio.h": "c",
-        "interfaces.h": "c"
+        "interfaces.h": "c",
+        "array": "c",
+        "string_view": "c",
+        "initializer_list": "c",
+        "utility": "c"
     }
 }
