@@ -1,20 +1,10 @@
-#define TAM_PILHA 3
+#include "../interfaces/interfaces.h"
 
-typedef struct PacienteInternado {
-    char nome[100]; 
-    char dieta[100];
-    char medicaçoesDeRotina[100];
-    char tratamento[100];
-    struct No *proxPaciente;
-} PacienteInternado;
+void avaliacao_internacao(Triagem *triagemPaciente, PilhaPacientesInternados *pilhaPacientesInternados);
 
-typedef struct Pilha {
-    PacienteInternado *topo;
-} Pilha;
-
-Pilha* inicializaPilha();
-int pilhaVazia(Pilha *p);
-void empilha(Pilha *p, int valor);
-int desempilha(Pilha *p);
-void imprimePilha(Pilha *p);
-Pilha* liberaPilha(Pilha *p);
+PilhaPacientesInternados* inicializar_pilha_pacientes_internados();
+int pilha_vazia_pacientes_internados(PilhaPacientesInternados *p);
+void adicionar_pacientes_internados(PilhaPacientesInternados *p, PacienteInternado dadosPacienteInternado);
+void remover_pacientes_internados(PilhaPacientesInternados *p);
+void imprimer_pilha_pacientes_internados(PilhaPacientesInternados *p);
+PilhaPacientesInternados* liberar_pilha_pacientes_internados(PilhaPacientesInternados *p);

@@ -5,7 +5,7 @@ com:
 - sala de emergência
 - farmácia
 
-prioridade (
+baseDeRisco (
     Vermelho = emergência, 
     Amarelo = urgente,
     Verde = não urgente). 

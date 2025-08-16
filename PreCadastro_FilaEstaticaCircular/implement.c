@@ -1,10 +1,11 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+
 #include "interface.h"
 
 void inicializar_fila_pre_cadastro(FilaCadastro* fila) {
-    printf("Inicializando a fila...\n");
+    printf("Inicializando a fila pré cadastro...\n");
     fila->inicio = 0;
     fila->final = 0;
     fila->size = 0;
@@ -31,7 +32,7 @@ void cadastrar_paciente_fila_pre_cadastro(FilaCadastro *fila, PacienteCadastro p
     fila->final = (fila->final + 1) % MAX_PACIENTES_PRE_CADASTRO;
     fila->size++;
     
-    printf("\n\n=== Dados do paciente cadastrado ===\n");
+    printf("\n=== Dados do paciente cadastrado ===\n");
     printf("-> Nome: %s\n", pacienteDados.nome);
     printf("-> CPF: %s\n", pacienteDados.CPF);
     printf("-> Endereço: %s\n", pacienteDados.endereco);

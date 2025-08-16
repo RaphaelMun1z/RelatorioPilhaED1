@@ -2,57 +2,55 @@
 #include <stdlib.h>
 #include "interface.h"
 
-void inicializaPilha(Pilha *p){
-    for (int ii = 0; ii < TAM_PILHA; ii++){
-        p->dados[ii] = 0;
-    }
+void inicializar_pilha_logs(PilhaLog *p){
+    printf("Inicializando a pilha logs...\n");
+    
     p->topo = 0;
 }
 
-int pilhaCheia(Pilha *p){
-    if(p->topo == TAM_PILHA){
+int pilha_cheia_logs(PilhaLog *p){
+    if(p->topo == TAM_PILHA_LOGS){
         return 1;
     }
     return 0;
 }
 
-int pilhaVazia(Pilha *p){
+int pilha_vazia_logs(PilhaLog *p){
     if(p->topo == 0){
         return 1;
     }
     return 0;
 }
 
-void empilha(Pilha *p, int valor){
-    if(pilhaCheia(p) == 1){
-        printf("Pilha cheia! Não é possível empilhar.\n");
+void adicionar_log(PilhaLog *p, NoLog novoLog){
+    if(pilha_cheia_logs(p) == 1){
+        printf("PilhaLog cheia! Não é possível criar log.\n");
         return;
     }
     
-    p->dados[p->topo] = valor;
+    p->logs[p->topo] = novoLog;
     p->topo++;
-    printf("Empilhado com sucesso.\n");
+    printf("\n[Log criado com sucesso!]\n");
 }
 
-int desempilha(Pilha *p){
-    if(pilhaVazia(p) == 1){
-        printf("Pilha vazia! Não é possível desempilhar.\n");
-        return -1;
+void remover_log(PilhaLog *p){
+    if(pilha_vazia_logs(p) == 1){
+        printf("PilhaLog vazia! Não é possível desempilhar.\n");
+        return;
     }
     
     p->topo--;
     printf("Desempilhado com sucesso.\n");
-    return p->dados[p->topo];
 }
 
-void imprimePilha(Pilha *p){
-    if(pilhaVazia(p) == 1){
-        printf("Pilha vazia! Não há elementos para imprimir.\n");
+void imprimer_pilha_logs(PilhaLog *p){
+    if(pilha_vazia_logs(p) == 1){
+        printf("PilhaLog vazia! Não há elementos para imprimir.\n");
         return;
     }
     
     printf("Elementos da pilha:\n");
     for(int ii = p->topo - 1; ii >= 0; ii--){
-        printf("| %d |\n", p->dados[ii]);
+        printf("Hora início: %s \n", p->logs[ii].horaInicio.hora);
     }
 }

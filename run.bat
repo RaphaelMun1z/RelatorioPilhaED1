@@ -6,7 +6,10 @@ echo Compilando o projeto...
 :: Comando de compilacao
 gcc main.c ^
 PreCadastro_FilaEstaticaCircular/implement.c ^
+Triagem_FilaEstaticaCircular/implement.c ^
 FilaAtendimento_FilaDinamica/implement.c ^
+PilhaLogAtendimento_PilhaEstatica/implement.c ^
+PilhaPacientesInternados_PilhaDinamica/implement.c ^
 -o app.exe -Wall
 
 :: Verifica se o executavel foi criado

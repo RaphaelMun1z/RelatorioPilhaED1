@@ -1,19 +1,8 @@
-#define TAM_PILHA 100
+#include "../interfaces/interfaces.h"
 
-typedef struct Log {
-    int horaInicio; 
-    int horaTermino; 
-    double cidDiagPac;
-} Log;
-
-typedef struct Pilha {
-    Log logs[TAM_PILHA];
-    int topo;
-} Pilha;
-
-void inicializaPilha(Pilha *p);
-int pilhaCheia(Pilha *p);
-int pilhaVazia(Pilha *p);
-void empilha(Pilha *p, int valor);
-int desempilha(Pilha *p);
-void imprimePilha(Pilha *p);
+void inicializar_pilha_logs(PilhaLog *p);
+int pilha_cheia_logs(PilhaLog *p);
+int pilha_vazia_logs(PilhaLog *p);
+void adicionar_log(PilhaLog *p, NoLog novoLog);
+void remover_log(PilhaLog *p);
+void imprimer_pilha_logs(PilhaLog *p);

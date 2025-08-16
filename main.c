@@ -1,24 +1,35 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+
 #include "PreCadastro_FilaEstaticaCircular/interface.h"
+#include "Triagem_FilaEstaticaCircular/interface.h"
 #include "FilaAtendimento_FilaDinamica/interface.h"
+#include "PilhaLogAtendimento_PilhaEstatica/interface.h"
+#include "PilhaPacientesInternados_PilhaDinamica/interface.h"
 
 void mostraMenu();
 void escolheOpcao(int opcao);
-void limpa_entrada();
 void limpa_tela();
 
 void novo_cadastro();
 void nova_triagem();
 void novo_atendimento_medico();
+void nova_internacao();
+void gerar_relatorio();
 
 FilaCadastro preCadastroPacientes;
+FilaTriagem triagemPacientes;
 FilaAtendimento *atendimentoMedico;
+PilhaLog pilhaLogs;
+PilhaPacientesInternados *pilhaPacientesInternados;
 
 int main(){
     inicializar_fila_pre_cadastro(&preCadastroPacientes);
+    inicializar_fila_triagem(&triagemPacientes);
     atendimentoMedico = inicializar_fila_atendimento_medico();
+    inicializar_pilha_logs(&pilhaLogs);
+    pilhaPacientesInternados = inicializar_pilha_pacientes_internados();
     
     int opcao;
     do {
@@ -26,11 +37,10 @@ int main(){
         
         printf("\nOpção: ");
         scanf("%d", &opcao);
-        limpa_entrada();
+        getchar();
         printf("\n");
         
         escolheOpcao(opcao);
-        limpa_tela();
     } while (opcao != 0);
     
     return 0;
@@ -39,7 +49,7 @@ int main(){
 void mostraMenu(){
     printf("\n=========| MENU |=========\n");
     printf("[0] Sair\n");
-    printf("[1] Novo Cadastro\n");
+    printf("[1] Novo Pré-Cadastro\n");
     printf("[2] Nova Triagem\n");
     printf("[3] Iniciar Atendimento Médico\n");
     printf("[4] Nova Internação\n");
@@ -66,11 +76,11 @@ void escolheOpcao(int opcao){
             break;
         }
         case 4: {
-            printf("Opção 04");
+            nova_internacao();
             break;
         }
         case 5: {
-            printf("Opção 05");
+            gerar_relatorio();
             break;
         }
         default: {
@@ -80,13 +90,8 @@ void escolheOpcao(int opcao){
     }
 }
 
-void limpa_entrada(){
-    int c;
-    while ((c = getchar()) != '\n' && c != EOF) {}
-}
-
 void limpa_tela(){
-    printf("\n[Pressione alguma tecla para continuar]");
+    printf("\n> PRESSIONE ALGUMA TECLA PARA CONTINUAR");
     getchar();
     system("cls");
 }
@@ -108,9 +113,10 @@ void novo_cadastro(){
     fgets(pacienteDados.endereco, sizeof(pacienteDados.endereco), stdin);
     pacienteDados.endereco[strcspn(pacienteDados.endereco, "\n")] = '\0';
     
-    limpa_tela();
     cadastrar_paciente_fila_pre_cadastro(&preCadastroPacientes, pacienteDados);
     printf("[Paciente cadastrado com sucesso!]\n");
+    
+    limpa_tela();
 }
 
 void nova_triagem(){
@@ -135,19 +141,21 @@ void nova_triagem(){
         printf("Data de Nascimento do Paciente (dd/mm/aaaa): ");
         fgets(dataNasc, sizeof(dataNasc), stdin);
         dataNasc[strcspn(dataNasc, "\n")] = '\0';
+        getchar();
         
         char estadoSaude[100];
         printf("Avaliação do Estado de Saúde (descrição): ");
         fgets(estadoSaude, sizeof(estadoSaude), stdin);
         estadoSaude[strcspn(estadoSaude, "\n")] = '\0';
         
-        int prioridade;
-        printf("Prioridade: \n");
+        int baseDeRisco;
+        printf("Base de Risco: \n");
         printf("[1] Verde\n");
         printf("[2] Amarelo\n");
         printf("[3] Vermelho\n");
         printf("Opção escolhida: ");
-        scanf("%d", &prioridade);
+        scanf("%d", &baseDeRisco);
+        getchar();
         printf("\n");
         
         char sintomas[100];
@@ -159,29 +167,60 @@ void nova_triagem(){
         triagem.paciente = pacienteEncontrado;
         strcpy(triagem.dataNascPaciente, dataNasc);
         strcpy(triagem.avaEstadoSaude, estadoSaude);
-        triagem.prioridade = prioridade;
+        triagem.baseDeRisco = baseDeRisco;
         strcpy(triagem.sintomas, sintomas);
         
+        cadastrar_paciente_fila_triagem(&triagemPacientes, triagem);
+        printf("[Triagem realizada com sucesso!]\n\n");
+    }
+    
+    limpa_tela();
+}
+
+void novo_atendimento_medico(){
+    printf("~~~~~~ Atendimento Médico ~~~~~~\n");
+    
+    char nomePaciente[100];
+    printf("Informe o nome do paciente: ");
+    fgets(nomePaciente, sizeof(nomePaciente), stdin);
+    nomePaciente[strcspn(nomePaciente, "\n")] = '\0';
+    
+    Triagem *pacientePassouPelaTriagem = consultar_via_nome_fila_triagem(&triagemPacientes, nomePaciente);
+    if(pacientePassouPelaTriagem != NULL){
         int tipoAtendimento = 0;
         printf("Tipo de atendimento: \n");
         printf("[0] Consulta\n");
         printf("[1] Emergência\n");
         printf("Opção escolhida: ");
         scanf("%d", &tipoAtendimento);
+        getchar();
         printf("\n");
         
-        getchar();
-        printf("[Triagem realizada com sucesso!]\n");
-        limpa_tela();
-        
-        // Entrar na fila para atendimento médico
-        adicionar_fila_atendimento_medico(atendimentoMedico, pacienteEncontrado, tipoAtendimento);
-        printf("[Paciente adicionado a fila de atendimento com sucesso!]\n");
+        adicionar_fila_atendimento_medico(atendimentoMedico, pacientePassouPelaTriagem, tipoAtendimento, &pilhaLogs);
+        printf("\n[Paciente adicionado a fila de atendimento com sucesso!]\n");
     }
+    
+    limpa_tela();
 }
 
-void novo_atendimento_medico(){
-    printf("Atendimento Médico: \n");
+void nova_internacao(){
+    printf("~~~~~~ Internação ~~~~~~\n");
     
+    char cpfBusca[16];
+    printf("Informe o CPF do paciente: ");
+    fgets(cpfBusca, sizeof(cpfBusca), stdin);
+    cpfBusca[strcspn(cpfBusca, "\n")] = '\0';
     
+    PacienteFilaAtendimento *pacienteFoiAtendido = obter_paciente_via_cpf_atendimento_medico(atendimentoMedico, cpfBusca);
+    if(pacienteFoiAtendido != NULL){
+        avaliacao_internacao(&pacienteFoiAtendido->triagemPaciente, pilhaPacientesInternados);
+    }
+    
+    limpa_tela();
+}
+
+void gerar_relatorio(){
+    printf("~~~~~~ Relatório ~~~~~~\n");
+    
+    limpa_tela();
 }
