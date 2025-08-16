@@ -1,4 +1,17 @@
-Comandos para executar pelo VS Code:
+# Trabalho 2 — Estrutura de Dados
+Sistema de Saúde Pública (PA) com TADs.  
+Integrantes: Caio Mendes (32411BSI023), Pedro Paulo Cunha (32121BSI021), Ygor Marangoni (32411BSI006), Raphael Muniz (32411BSI003).
+Disciplina: Estrutura de Dados I — Docente: Daniela Justiniano de Sousa Pereira.
+
+## Objetivo
+Simular o fluxo de um Pronto Atendimento: pré-cadastro, triagem, fila de espera, atendimento com registro (logs) e decisão de internação.  
+TADs usados:
+- Lista estática circular (pré-cadastro)
+- Fila estática circular (triagem)
+- Pilha estática (logs de atendimentos)
+- Pilha dinâmica (pacientes internados)
+
+# Comandos para executar pelo VS Code:
 
 gcc main.c ^
 PreCadastro_FilaEstaticaCircular/implement.c ^
