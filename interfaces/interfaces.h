@@ -65,7 +65,7 @@ typedef struct FilaAtendimento {
 typedef struct NoLog {
     Horario horaInicio; 
     Horario horaTermino; 
-    double cidDiagPac;
+    char cidDiagPac[20];
 } NoLog;
 
 typedef struct PilhaLog {

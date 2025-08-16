@@ -56,7 +56,6 @@ void adicionar_fila_atendimento_medico(FilaAtendimento *fila, Triagem *pacienteT
     }
     fila->fim = no_paciente;
     
-    // Gerar LOG
     adicionar_log(pilhaLogs, prepara_novo_log());
 }
 
@@ -93,11 +92,13 @@ NoLog prepara_novo_log(){
     fgets(horaTermino.segundo, sizeof(horaTermino.segundo), stdin);
     horaTermino.segundo[strcspn(horaTermino.segundo, "\n")] = '\0';
     
-    double cidPaciente = 1.0;
-    
     novoLog.horaInicio = horaInicio;
     novoLog.horaTermino = horaTermino;
-    novoLog.cidDiagPac = cidPaciente;
+    
+    char cidPaciente[20];
+    printf("CID do paciente: ");
+    fgets(novoLog.cidDiagPac, sizeof(novoLog.cidDiagPac), stdin);
+    novoLog.cidDiagPac[strcspn(novoLog.cidDiagPac, "\n")] = '\0';
     
     return novoLog;
 }

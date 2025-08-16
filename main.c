@@ -238,7 +238,7 @@ void gerar_relatorio(){
             break;
         }
         case 2:{
-            GerarRelatorioTotalPacientesInternados(pilhaPacientesInternados, obter_tamanho_pilha_pacientes_internados(pilhaPacientesInternados));
+            GerarRelatorioTotalPacientesInternados(pilhaPacientesInternados);
             break;
         }
         default:{

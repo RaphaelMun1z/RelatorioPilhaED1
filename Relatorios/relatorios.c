@@ -3,8 +3,15 @@
 #include <string.h>
 
 #include "../interfaces/interfaces.h"
+#include "../PilhaPacientesInternados_PilhaDinamica/interface.h"
+#include "../PreCadastro_FilaEstaticaCircular/interface.h"
 
 void GerarRelatorioTotalPacientesCadastrados(FilaCadastro *pacientesCadastrados){
+    if(fila_vazia_pre_cadastro(pacientesCadastrados)){
+        printf("Não foi possível gerar o relatório. Não há pacientes cadastrados!\n");
+        return;
+    }
+    
     FILE *arquivo = fopen("Relatorios/PacientesCadastrados.txt", "w");
     
     if (arquivo == NULL) {
@@ -30,7 +37,17 @@ void GerarRelatorioTotalPacientesCadastrados(FilaCadastro *pacientesCadastrados)
     printf("Relatorio gerado com sucesso!\n");
 }
 
-void GerarRelatorioTotalPacientesInternados(PacienteInternado *pacientesInternados, int quantidadePacientes){
+void GerarRelatorioTotalPacientesInternados(PilhaPacientesInternados *pacientesInternados){
+    if(pacientesInternados == NULL){
+        printf("A pilha ainda não foi inicializada!\n");
+        return;
+    }
+    
+    if(pilha_vazia_pacientes_internados(pacientesInternados) == 1){
+        printf("Não foi possível gerar o relatório. Não há pacientes internados.\n");
+        return;
+    }
+    
     FILE *arquivo = fopen("Relatorios/PacientesInternados.txt", "w");
     
     if (arquivo == NULL) {
@@ -42,8 +59,12 @@ void GerarRelatorioTotalPacientesInternados(PacienteInternado *pacientesInternad
     fprintf(arquivo, "%-30s %-30s %-40s %-40s\n", "NOME", "DIETA", "MEDICAÇÕES", "TRATAMENTO");
     fprintf(arquivo, "--------------------------------------------------------------------------------------------------------------------------------------\n"); 
     
-    for (int ii = 0; ii < quantidadePacientes; ii++) {
-        fprintf(arquivo, "%-30s %-30s %-40s %-40s\n", pacientesInternados[ii].nome, pacientesInternados[ii].dieta, pacientesInternados[ii].medicacoesDeRotina, pacientesInternados[ii].tratamento);             
+    int quantidadePacientes = 0;
+    PacienteInternado *atual = pacientesInternados->topo;
+    while (atual != NULL) {
+        quantidadePacientes++;
+        fprintf(arquivo, "%-30s %-30s %-40s %-40s\n", atual->nome, atual->dieta, atual->medicacoesDeRotina, atual->tratamento);             
+        atual = atual->proxPaciente;
     }
     
     fprintf(arquivo, "--------------------------------------------------------------------------------------------------------------------------------------\n\n"); 

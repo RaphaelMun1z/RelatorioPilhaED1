@@ -33,7 +33,7 @@ void adicionar_pacientes_internados(PilhaPacientesInternados *p, PacienteInterna
         return;
     }
     
-    no_novo_paciente_internado = &dadosPacienteInternado;
+    *no_novo_paciente_internado = dadosPacienteInternado;
     no_novo_paciente_internado->proxPaciente = p->topo;
     
     p->topo = no_novo_paciente_internado;
